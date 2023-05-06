@@ -23,7 +23,7 @@ const router = createBrowserRouter(
       <Route path='/product/:id' element={<ProductScreen/>}/>
     </Route>
   )
-)
+);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
