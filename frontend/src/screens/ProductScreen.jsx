@@ -84,7 +84,7 @@ const ProductScreen = () => {
                                 type='button'
                                 disabled={product.countInStock === 0}
                                 >
-                                    Ajouter
+                                    + Panier
                                 </Button>
                             </ListGroup.Item>
                         </ListGroup>

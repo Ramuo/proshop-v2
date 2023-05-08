@@ -10,7 +10,7 @@ function Header() {
         <Navbar bg='dark' variant='dark' expand='md' collapseOnSelect>
             <Container>
                 <LinkContainer to='/'>
-                    <Navbar.Brand >
+                    <Navbar.Brand>
                         <img src={logo} alt="Proshop" />
                         Proshop
                     </Navbar.Brand>

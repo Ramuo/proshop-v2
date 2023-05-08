@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom';
-import {Card} from 'react-bootstrap';
+import {Card, Button} from 'react-bootstrap';
 import Rating from './Rating';
 
 const Product = ({product}) => {
@@ -32,6 +32,9 @@ const Product = ({product}) => {
                     {product.price}€
                 </Card.Text>   
             </Card.Body>
+            <Button>
+                + Panier
+            </Button>
         </Card>
     );
 };
