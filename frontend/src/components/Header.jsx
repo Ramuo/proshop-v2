@@ -25,7 +25,7 @@ function Header() {
                         </LinkContainer>
                         <LinkContainer to='/login'>
                             <Nav.Link>
-                                <FaUser/>S'identifier
+                                <FaUser/>Connexion
                             </Nav.Link>
                         </LinkContainer>
                     </Nav>
