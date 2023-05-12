@@ -1,14 +1,15 @@
 import {Link} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {Card, Button} from 'react-bootstrap';
 import Rating from './Rating';
 
 const Product = ({product}) => {
     // STATE
-
+    
+    
 
     //FUNCTIONS
-
-
+   
 
     // RENDERED ELEMENTS
     return (
@@ -28,9 +29,9 @@ const Product = ({product}) => {
                     <Rating value={product.rating} text={`${product.numReviews} avis`}/>
                 </Card.Text>
 
-                <Card.Text as='h3'>
+                <Card.Text as='h5'>
                     {product.price}€
-                </Card.Text>   
+                </Card.Text>  
             </Card.Body>
             <Button>
                 + Panier

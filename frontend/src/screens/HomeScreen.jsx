@@ -8,6 +8,7 @@ import { useGetProductsQuery } from '../slices/productsApiSlice';
 
 
 
+
 const HomeScreen = () => {
     // STATE
     const {data: products, isLoading, error} = useGetProductsQuery();
@@ -22,7 +23,7 @@ const HomeScreen = () => {
             <Loader/>
         ) : error ? (<Message variant='danger'>{error.data?.message || error.error}</Message>) : (
             <>
-                <h1>NOS COUPS DE COEUR</h1>
+                <h3>NOS COUPS DE COEUR</h3>
                 <Row>
                     {products.map((product) => (
                         <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
