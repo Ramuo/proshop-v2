@@ -3,11 +3,13 @@ import {Link} from 'react-router-dom';
 import {Card, Button} from 'react-bootstrap';
 import Rating from './Rating';
 
+
+
+
+
 const Product = ({product}) => {
     // STATE
-    
-    
-
+   
     //FUNCTIONS
    
 
@@ -34,8 +36,8 @@ const Product = ({product}) => {
                 </Card.Text>  
             </Card.Body>
             <Link to={`/product/${product._id}`} className='d-flex justify-content-end'>
-                <Button>
-                    Ajouter
+                <Button type='button' className='btn-block w-55'>
+                    Ajouter au panier
                 </Button>
             </Link>
         </Card>
