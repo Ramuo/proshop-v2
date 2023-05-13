@@ -1,5 +1,5 @@
+
 import {Link} from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 import {Card, Button} from 'react-bootstrap';
 import Rating from './Rating';
 
@@ -33,9 +33,11 @@ const Product = ({product}) => {
                     {product.price}€
                 </Card.Text>  
             </Card.Body>
-            <Button>
-                + Panier
-            </Button>
+            <Link to={`/product/${product._id}`} className='d-flex justify-content-end'>
+                <Button>
+                    Ajouter
+                </Button>
+            </Link>
         </Card>
     );
 };

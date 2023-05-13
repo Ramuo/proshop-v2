@@ -26,18 +26,20 @@ const ProductScreen = () => {
   
     const [qty, setQty] = useState(1);
    
-  
-    const addToCartHandler = () => {
-        dispatch(addToCart({ ...product, qty }));
-        navigate('/cart');
-    };
-  
+
+    // Data from global state
     const {
       data: product,
       isLoading,
       error,
     } = useGetProductDetailsQuery(productId);
   
+    // FUNCTIONS:
+    //Function to add items in cart
+    const addToCartHandler = () => {
+        dispatch(addToCart({ ...product, qty }));
+        navigate('/cart');
+    };
     
     // RENDERED ELEMENTS
     return (
