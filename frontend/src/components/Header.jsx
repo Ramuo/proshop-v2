@@ -1,6 +1,6 @@
 import {useSelector} from 'react-redux';
 import {LinkContainer} from 'react-router-bootstrap';
-import {Badge, Navbar, Nav, Container } from 'react-bootstrap';
+import {Badge, Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { FaShoppingCart, FaUser } from 'react-icons/fa';
 import logo from '../assets/logo.png';
 
@@ -9,8 +9,16 @@ function Header() {
     //STATE
     //Global state
     const {cartItems} = useSelector((state) => state.cart)
-    console.log(cartItems);
+    const {userInfo} = useSelector((state) => state.auth)
+   
 
+    //FUNCTIONS
+    const logoutHandler = () => {
+
+    }
+
+
+    //RENDERED ELEMENTS
     return (
     <header>
         <Navbar bg='dark' variant='dark' expand='md' collapseOnSelect>
@@ -34,11 +42,26 @@ function Header() {
                                 )}
                             </Nav.Link>
                         </LinkContainer>
-                        <LinkContainer to='/login'>
+
+                       {userInfo ? (
+                        <>
+                            <NavDropdown title={userInfo.name} id='username'>
+                                <LinkContainer to='/profile'>
+                                <NavDropdown.Item>Profil</NavDropdown.Item>
+                                </LinkContainer>
+                                <NavDropdown.Item onClick={logoutHandler}>
+                                    Déconnexion
+                                </NavDropdown.Item>
+                            </NavDropdown>
+                        </>
+                        ) : (
+                            <LinkContainer to='/login'>
                             <Nav.Link>
-                                <FaUser/>Connexion
+                                <FaUser /> Connexion
                             </Nav.Link>
-                        </LinkContainer>
+                            </LinkContainer>
+                        )}
+                        
                     </Nav>
                 </Navbar.Collapse>
             </Container>
