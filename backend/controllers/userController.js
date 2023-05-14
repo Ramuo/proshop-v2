@@ -1,6 +1,7 @@
-import { request } from 'express';
 import asyncHandler from '../middleware/asyncHandler.js';
 import User  from '../models/userModel.js';
+import generateToken from '../utils/generateToken.js';
+
 
 
 //@desc     Login user & and get the token (signin)
@@ -12,8 +13,10 @@ const loginUser = asyncHandler(async(req, res) => {
    //Let us find a user
    const user = await User.findOne({ email });
 
-   // Let us validate user cedential
+   // Let's validate user cedentials
    if(user && (await user.matchPassword(password))){
+    generateToken(res, user._id);
+
     res.json({
         _id: user._id,
         name: user.name,
@@ -26,19 +29,59 @@ const loginUser = asyncHandler(async(req, res) => {
    }
 });
 
+
 //@desc     Register new user (signup)
 //@route    POST /api/users
 //@access   Public
 const registerUser = asyncHandler(async(req, res) => {
-    res.send('register new user');
+    const {name, email, password} = req.body;
+
+    // Find user by email
+    const userExist = await User.findOne({ email });
+
+    // Check if user exist alredy
+    if(userExist){
+        res.status(400);
+        throw new Error("L'utilistaur existe déjà")
+    };
+
+    //To create new user it does'nt exist
+    const user = await User.create({
+        name,
+        email,
+        password
+    });
+
+    //Once user created, then set it into db
+    if(user){
+        generateToken(res, user._id);
+
+        res.status(201).json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            isAdmin: user.isAdmin
+        });
+    }else{
+        res.status(400);
+        throw new Error("Information invalide")
+    };
+
 });
+
 
 //@desc     Logout user / clear the cookie
 //@route    POST /api/users/logout
 //@access   Private
 const logoutUser = asyncHandler(async(req, res) => {
-    res.send('logout user');
+    res.cookie('jwt', '', {
+       httpOnly: true,
+       expires: new Date(0)
+    });
+
+    res.status(200).json({message: "Déconnecté avec succès"});
 });
+
 
 //@desc     Get user profile
 //@route    GET /api/users/profile

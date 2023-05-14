@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 dotenv.config();
 import connectDB from './config/db.js'
 import {notFound, errorHandler} from './middleware/errorMiddleware.js';
@@ -18,6 +19,9 @@ const app = express();
 // Bordy parser middleware
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+
+// Cookie parsr middleware
+app.use(cookieParser());
 
 
 //ROUTES

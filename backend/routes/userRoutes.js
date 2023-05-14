@@ -9,23 +9,24 @@ import {
     getUserById,
     deleteUser,
     updateUser
-} from '../controllers/userController.js'
+} from '../controllers/userController.js';
+import {protect, admin} from '../middleware/authMiddleware.js'
 
 //Initialize router
 const router = express.Router();
 
 router.route('/')
     .post(registerUser)
-    .get(getUsers);
+    .get(protect, admin, getUsers);
 router.route('/logout').post(logoutUser);
 router.route('/login').post(loginUser);
 router.route('/profile')
-    .get(getUserProfile)
-    .put(updateUserProfile);
+    .get(protect, getUserProfile)
+    .put(protect, updateUserProfile);
 router.route('/:id')
-    .delete(deleteUser)
-    .get(getUserById)
-    .put(updateUser)
+    .delete(protect, admin, deleteUser)
+    .get(protect, admin, getUserById)
+    .put(protect, admin, updateUser);
 
 
 
