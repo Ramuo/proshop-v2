@@ -15,6 +15,9 @@ connectDB();
 //INITIALIZE EXPRESS
 const app = express();
 
+// Bordy parser middleware
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
 
 //ROUTES

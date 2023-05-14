@@ -1,3 +1,4 @@
+import { request } from 'express';
 import asyncHandler from '../middleware/asyncHandler.js';
 import User  from '../models/userModel.js';
 
@@ -6,7 +7,23 @@ import User  from '../models/userModel.js';
 //@route    POST /api/users/login
 //@access   Public
 const loginUser = asyncHandler(async(req, res) => {
-    res.send('login user');
+   const {email, password} = req.body;
+
+   //Let us find a user
+   const user = await User.findOne({ email });
+
+   // Let us validate user cedential
+   if(user && (await user.matchPassword(password))){
+    res.json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin
+    })
+   }else{
+    res.status(401);
+    throw new Error("Email ou mot de passe invalide");
+   }
 });
 
 //@desc     Register new user (signup)
