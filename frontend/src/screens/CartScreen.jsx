@@ -1,3 +1,4 @@
+
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -40,7 +41,7 @@ const CartScreen = () => {
 
     // TO check out handler
     const checkOutHandler = () => {
-        navigate('/login?redirect/shipping');
+        navigate('/login?redirect=/shipping');
     };
 
 
