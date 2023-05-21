@@ -3,7 +3,8 @@ import { USERS_URL } from "../constants";
 
 
 
-const userApiSlice = apiSlice.injectEndpoints({
+
+export const userApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         //LOGIN
         login: builder.mutation({
