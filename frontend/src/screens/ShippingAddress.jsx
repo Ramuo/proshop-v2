@@ -39,7 +39,7 @@ const ShippingScreen = () => {
     return (
         <FormContainer>
         
-          <h1>Livraison</h1>
+          <h1></h1>
           <Form onSubmit={submitHandler}>
             <Form.Group className='my-2' controlId='address'>
               <Form.Label>Adresse</Form.Label>
