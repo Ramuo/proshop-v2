@@ -50,25 +50,26 @@ const addOrderItems = asyncHandler(async (req, res) => {
 //@route    GET /api/orders/mine
 //@Access   Private
 const getMyOrders = asyncHandler(async (req, res) => {
-    const orders = await Order.find({user: req.params._id});
+    const orders = await Order.find({ user: req.user._id });
+    res.json(orders);
+}); 
 
-    res.status(200).json(orders);
-});  
-
-//@desc     Get order by ID
-//@route    GET /api/orders/:id
-//@Access   Private
+// @desc    Get order by ID
+// @route   GET /api/orders/:id
+// @access  Private
 const getOrderById = asyncHandler(async (req, res) => {
-   const order = await Order.findById(req.params.id).populate('user',
-   'name email' );
-
-   if(order){
-    res.status(200).json(order);
-   }else{
-    res.status(404);
-    throw new Error("Commande non trouvée");
-   }
-});  
+    const order = await Order.findById(req.params.id).populate(
+      'user',
+      'name email'
+    );
+  
+    if (order) {
+      res.json(order);
+    } else {
+      res.status(404);
+      throw new Error('Order not found');
+    }
+}); 
 
 //@desc     update order to paid
 //@route    PUT /api/orders/:id/pay
