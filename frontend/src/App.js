@@ -16,7 +16,7 @@ function App() {
         </Container>
       </main>
       <Footer/>
-      <ToastContainer/>
+      <ToastContainer className="toast-position"/>
     </>
   )
 }

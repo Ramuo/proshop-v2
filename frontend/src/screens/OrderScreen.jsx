@@ -141,14 +141,14 @@ const OrderScreen = () => {
                                 {order.paymentMethod}
                             </p>
                             {order.isPaid ? (
-                                <Message variant='success'> Réglé le {order.paidAt}</Message>
+                                <Message variant='success'> Payé le {order.paidAt}</Message>
                             ) : (
-                                <Message variant='danger'>Non réglé</Message>
+                                <Message variant='danger'>Non payé</Message>
                             )}
                         </ListGroup.Item>
 
                         <ListGroup.Item>
-                            <h2>Article(s) commandé(s)</h2>
+                            <h2>Articles commandés</h2>
                             {order.orderItems.map((item, index) => (
                                 <ListGroup.Item key={index}>
                                     <Row>
@@ -173,12 +173,12 @@ const OrderScreen = () => {
                 <Card>
                         <ListGroup variant='flush'>
                             <ListGroup.Item>
-                                <h2>Récapitulatif</h2>
+                                <h2>Ma commande</h2>
                             </ListGroup.Item>
 
                             <ListGroup.Item>
                                 <Row>
-                                    <Col>Article(s):</Col>
+                                    <Col>Prix:</Col>
                                     <Col>
                                         {order.itemsPrice}€
                                     </Col>

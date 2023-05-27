@@ -2,6 +2,11 @@ header{
   position: sticky;
   top: 0;
   Z-index: 10000;
+} 
+
+
+.toast-position {
+  top: 8rem !important;
 }
 
 main {
