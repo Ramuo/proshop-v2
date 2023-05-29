@@ -7,10 +7,13 @@ import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
+
+
 import {
   useGetOrderDetailsQuery,
   useGetPaypalClientIdQuery,
   usePayOrderMutation,
+  useDeliverOrderMutation
 } from '../slices/ordersApiSlice';
 
 
@@ -29,6 +32,8 @@ const OrderScreen = () => {
 
 
     const [payOrder, {isLoading: loadingPay}] = usePayOrderMutation();
+
+    const [deliverOrder, {isLoading: loadingDeliver}] = useDeliverOrderMutation();
 
     const [{isPending}, paypalDispatch] = usePayPalScriptReducer();
 
@@ -101,6 +106,16 @@ const OrderScreen = () => {
         }).then((orderId) => {
             return orderId;
         });
+    };
+
+    const delivereOrderHandler = async () => {
+        try {
+            await deliverOrder(orderId);
+            refetch();
+            toast.success("Command Livré");
+        } catch (err) {
+            toast.error(err?.data?.message || err.message);
+        }
     };
 
 
@@ -234,6 +249,23 @@ const OrderScreen = () => {
                                     )}
                                 </ListGroup.Item>
                             )}
+
+                            {loadingDeliver && <Loader/>}
+
+                            {userInfo && 
+                            userInfo.isAdmin && 
+                            order.isPaid && 
+                            !order.isDelivered && (
+                                <ListGroup.Item>
+                                    <Button 
+                                    type='button' 
+                                    className='btn btn-block'
+                                    onClick={delivereOrderHandler}
+                                    >
+                                        Marquer comme livré
+                                    </Button>
+                                </ListGroup.Item>
+                            )}
                         </ListGroup>
                     </Card>
                 </Col>
@@ -243,4 +275,5 @@ const OrderScreen = () => {
 }
 
 export default OrderScreen;
+
 
