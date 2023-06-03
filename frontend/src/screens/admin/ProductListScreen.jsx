@@ -25,7 +25,7 @@ const ProductListScreen = () => {
 
   //FUNCTIONS:
   const deleteHandler = async (id) => {
-    if(window.confirm("Êtes-vous sur de supprimer?"));
+    if(window.confirm("Êtes-vous sûr de supprimer?"));
     try {
       await deleteProduct(id);
       refetch();
