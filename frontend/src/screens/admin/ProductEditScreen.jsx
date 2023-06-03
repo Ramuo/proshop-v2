@@ -1,3 +1,4 @@
+
 import {useState, useEffect} from 'react';
 import {Link, useNavigate, useParams} from 'react-router-dom';
 import {Form, Button} from 'react-bootstrap';
@@ -7,7 +8,11 @@ import FormContainer from '../../components/FormContainer';
 import {toast} from 'react-toastify';
 
 
-import {useUpdateProductMutation, useGetProductDetailsQuery} from '../../slices/productsApiSlice';
+import {
+  useUpdateProductMutation, 
+  useGetProductDetailsQuery,
+  useUploadProductImageMutation
+} from '../../slices/productsApiSlice';
 
 
 
@@ -24,11 +29,45 @@ const ProductEditScreen = () => {
   const [category, setCategory] = useState('');
   const [countInStock, setCountInStock] = useState('');
 
+//ACTIONS
+  const {
+    data: product, 
+    isLoading, 
+    refetch, 
+    error
+  } = useGetProductDetailsQuery(productId);
 
-  const {data: product, isLoading, refetch, error} = useGetProductDetailsQuery(productId);
+  const [updateProduct, {isLoading: loadingUpdate}] = 
+  useUpdateProductMutation();
 
-  const [updateProduct, {isLoading: loadingUpdate}] = useUpdateProductMutation();
+  const [uploadProductImage, {loadingUpload}] = 
+  useUploadProductImageMutation();
 
+  
+  
+  // FUNCTIONS/
+  const submitHandler = async (e) => {
+    e.preventDefault();
+
+    try {
+      await updateProduct({
+        productId,
+        name,
+        price,
+        image,
+        brand,
+        category,
+        countInStock,
+        description,
+      });
+  
+      toast.success('Produit modifié avec succèss');
+      refetch();
+      navigate('/admin/productList');
+    } catch (err) {
+      toast.error(err?.data?.message || err.error)
+    };
+  };
 
   useEffect(() => {
     if(product){
@@ -42,33 +81,19 @@ const ProductEditScreen = () => {
     };
   }, [product]);
 
+  const uploadFileHandler = async (e) => {
+    const formData = new FormData();
+    formData.append('image', e.target.files[0]);
 
-  // FUNCTIONS/
-  const submitHandler = async (e) => {
-    e.preventDefault();
-
-    const updatedProduct = {
-      productId,
-      name,
-      price,
-      image,
-      brand,
-      category,
-      countInStock,
-      description,
+    try {
+      const res = await uploadProductImage(formData).unwrap();
+      toast.success(res.message);
+      setImage(res.image);
+    } catch (err) {
+      toast.error(err?.data?.message || err.error)
     };
 
-    const result = await updateProduct(updatedProduct);
-    if(result.error){
-      toast.error(result.error);
-    }else{
-      toast.success('Produit modifié avexc succès');
-      navigate('/admin/productlist');
-    }
-
-  };
-
-
+  }; 
 
 
   //REBDERED ELEMENTS
@@ -107,7 +132,7 @@ const ProductEditScreen = () => {
             ></Form.Control>
           </Form.Group>
 
-          {/* <Form.Group controlId='image' className='my-2'>
+          <Form.Group controlId='image' className='my-2'>
             <Form.Label>Image</Form.Label>
             <Form.Control
             type='text'
@@ -115,7 +140,13 @@ const ProductEditScreen = () => {
             value={image}
             onChange={(e) => setImage(e.target.value)}
             ></Form.Control>
-          </Form.Group> */}
+            <Form.Control
+            label='File'
+            onChange={uploadFileHandler}
+            type='file'
+            ></Form.Control>
+            {loadingUpload && <Loader/>}
+          </Form.Group> 
 
           <Form.Group controlId='brand' className='my-2'>
             <Form.Label>Marque</Form.Label>

@@ -46,7 +46,7 @@ process.env.PAYPAL_CLIENT_ID}));
 
 // STATIC ROUTE
 const __dirname = path.resolve(); //Set __dir to current directory
-app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 
 
 
