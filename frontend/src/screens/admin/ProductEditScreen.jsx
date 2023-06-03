@@ -98,7 +98,7 @@ const ProductEditScreen = () => {
 
   //REBDERED ELEMENTS
   return <>
-    <Link to='/admin/productList' className='btn btn-light my-3'>
+    <Link to='/admin/productlist' className='btn btn-light my-3'>
       Retour
     </Link>
 
