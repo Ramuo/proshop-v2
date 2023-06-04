@@ -12,12 +12,24 @@ import Product from '../models/productModel.js';
 //@route    GET /api/products
 //@access   Public
 const getProducts = asyncHandler (async (req, res) => {
-    const pageSize = 8; //Let's us set up page size
+    //Let's us set up page size
+    const pageSize = 8; 
     const page = Number(req.query.pageNumber) || 1; // to the get a query param from the url, if that not there so it will be page 1
-    // To get total number of pages
-    const count = await Product.countDocuments();
 
-    const products = await Product.find({})
+    // To Search product
+    const keyword = req.query.keyword 
+      ? {
+          name: {
+            $regex: req.query.keyword, 
+            $options: 'i'
+          }
+        }
+      : {};
+
+    // To get total number of pages
+    const count = await Product.countDocuments({...keyword});
+
+    const products = await Product.find({...keyword})
       .limit(pageSize)
       .skip(pageSize * (page - 1));
     res.json({products, page, pages: Math.ceil(count / pageSize)});

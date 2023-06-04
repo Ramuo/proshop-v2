@@ -14,10 +14,13 @@ import {
 
 
 const HomeScreen = () => {
-    const {pageNumber} = useParams();
+    const {pageNumber, keyword } = useParams();
 
     // STATE
-    const {data, isLoading, error} = useGetProductsQuery({pageNumber});
+    const {data, isLoading, error} = useGetProductsQuery({
+        keyword, 
+        pageNumber
+    });
 
     // FUNCTIONS:
 
@@ -40,7 +43,8 @@ const HomeScreen = () => {
 
                 <Paginate
                  pages={data.pages}
-                 page={data.page}
+                 page={data.page } 
+                 keyword = {keyword ? keyword : ''}
                 />
                
             </>
