@@ -4,6 +4,7 @@ import Product from '../components/Product';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Paginate from '../components/Paginate';
+import { Link } from 'react-router-dom';
 
 
 import { 
@@ -28,6 +29,10 @@ const HomeScreen = () => {
     // RENDERED ELEMENTS
     return (
        <>
+        {keyword && (
+            <Link to='/' className='btn btn-light mb-4'>Retour</Link>
+        )}
+
         {isLoading ? (
             <Loader/>
         ) : error ? (<Message variant='danger'>{error.data?.message || error.error}</Message>) : (
@@ -40,13 +45,12 @@ const HomeScreen = () => {
                         </Col>
                     ))}
                 </Row>
-
+                
                 <Paginate
                  pages={data.pages}
                  page={data.page } 
                  keyword = {keyword ? keyword : ''}
-                />
-               
+                /> 
             </>
         )}
        </>
