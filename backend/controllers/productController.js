@@ -81,7 +81,7 @@ const updateProduct = asyncHandler(async (req, res) => {
 
   
 //@desc    Delete product
-//@route   DLETE /api/products/:id
+//@route   DELETE /api/products/:id
 //@access  Private/admin
 const deleteProduct = asyncHandler (async (req, res) => {
   const product = await Product.findById(req.params.id);
@@ -96,6 +96,53 @@ const deleteProduct = asyncHandler (async (req, res) => {
  
 });
 
+//@desc    Creta a new review for product
+//@route   POST /api/products/:id/reviews
+//@access  Private
+const createProductReview = asyncHandler (async (req, res) => {
+  //1- Let's get the rating and the comment
+  const {rating, comment} = req.body;
+
+  //2- Let'us get the product
+  const product = await Product.findById(req.params.id);
+
+  //3- Let's check if the product was already reviewed
+  if(product){
+    const alreadyReviewed = product.reviews.find(
+      (review) => review.user.toString() === req.user._id.toString() 
+    );
+
+    if(alreadyReviewed){
+      res.status(400);
+      throw new Error('Vous aveze déjà laissé un avis');
+    };
+
+    //4- Create a review object
+    const review = {
+      name: req.user.name,
+      rating: Number(rating),
+      comment,
+      user: req.user._id,
+    };
+
+    //5- Let' us push the created review to review collection
+    product.reviews.push(review);
+
+    product.numReviews = product.reviews.length;
+
+    //6- To GET the rating, add ratings with reduce then divide it by the reviews lenght
+    product.rating = 
+      product.reviews.reduce((acc, review) => acc + review.rating, 0) / product.reviews.length;
+
+    await product.save();
+    res.status(201).json({message: 'Avis ajouté'});
+
+  }else{
+    res.status(404);
+    throw new Error('Produit non trouvé');
+  }
+});
+
 
 
 export {
@@ -104,4 +151,5 @@ export {
     createProduct,
     updateProduct,
     deleteProduct,
+    createProductReview,
 }
