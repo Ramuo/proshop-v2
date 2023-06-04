@@ -2,13 +2,25 @@ import asyncHandler from '../middleware/asyncHandler.js';
 import Product from '../models/productModel.js';
 
 
+// const getProducts = asyncHandler (async (req, res) => {
+//   const products = await Product.find({});
+//   res.json(products)
+// });
 
-//@desc     Fetch All products
+
+//@desc     Fetch All products and implement page size
 //@route    GET /api/products
 //@access   Public
 const getProducts = asyncHandler (async (req, res) => {
-    const products = await Product.find({});
-    res.json(products)
+    const pageSize = 2; //Let's us set up page size
+    const page = Number(req.query.pageNumber) || 1; // to the get a query param from the url, if that not there so it will be page 1
+    // To get total number of pages
+    const count = await Product.countDocuments();
+
+    const products = await Product.find({})
+      .limit(pageSize)
+      .skip(pageSize * (page - 1));
+    res.json({products, page, pages: Math.ceil(count / pageSize)});
 });
 
 
@@ -142,6 +154,8 @@ const createProductReview = asyncHandler (async (req, res) => {
     throw new Error('Produit non trouvé');
   }
 });
+
+
 
 
 
