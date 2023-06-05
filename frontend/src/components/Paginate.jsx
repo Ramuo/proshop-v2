@@ -23,7 +23,7 @@ const Paginate = ({pages, page, isAdmin = false, keyword = ''}) => {
                 ))}
             </Pagination>
         )
-    )
+    );
 }
 
 export default Paginate
