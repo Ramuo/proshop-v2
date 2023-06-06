@@ -13,6 +13,7 @@ import {
 import Rating from "../components/Rating";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
+import Meta from "../components/Meta";
 import { useDispatch, useSelector } from "react-redux";
 import {addToCart} from '../slices/cartSlice';
 import {toast} from 'react-toastify';
@@ -83,6 +84,7 @@ const ProductScreen = () => {
                 <Message variant='danger'>{error.data?.message || error.error}</Message>
             ) : (
                 <>
+                     <Meta title={product.name}/>
                     <Row>
                         <Col md={5}>
                             <Image src={product.image} alt={product.name} fluid/>

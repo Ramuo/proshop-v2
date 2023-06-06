@@ -13,7 +13,7 @@ import Product from '../models/productModel.js';
 //@access   Public
 const getProducts = asyncHandler (async (req, res) => {
     //Let's us set up page size
-    const pageSize = 8; 
+    const pageSize = process.env.PAGINATION_LIMIT; 
     const page = Number(req.query.pageNumber) || 1; // to the get a query param from the url, if that not there so it will be page 1
 
     // To Search product
