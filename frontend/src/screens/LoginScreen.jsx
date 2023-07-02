@@ -60,7 +60,7 @@ const LoginScreen = () => {
         </Form.Group>
 
         <Form.Group className='my-2' controlId='password'>
-          <Form.Label>Mot de pass</Form.Label>
+          <Form.Label>Mot de passe</Form.Label>
           <Form.Control
             type='password'
             placeholder='Votre mot de passe'
