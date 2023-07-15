@@ -19,7 +19,7 @@ const SearchBox = () => {
     } else{
         navigate('/');
     }
-};
+  };
 
   return (
     <Form onSubmit={submitHandler} className='d-flex'>

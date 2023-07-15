@@ -52,7 +52,7 @@ function Header() {
                 <Navbar.Collapse id='basic-navbar-nav'>
                     <Nav className="ms-auto">
                         <SearchBox/>
-                        <LinkContainer to='/cart'>
+                        <LinkContainer to='/cart'> 
                             <Nav.Link>
                                 <FaShoppingCart/>Panier
                                 {cartItems.length > 0 && (
