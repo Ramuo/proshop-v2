@@ -41,22 +41,20 @@ app.get('/api/config/paypal', (req, res) => res.send({clientId:
 process.env.PAYPAL_CLIENT_ID}));
 
 
-// STATIC ROUTE
+//STATIC ROUTE
 const __dirname = path.resolve(); //Set __dir to current directory
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 if(process.env.NODE_ENV === 'production'){
-  // Set static folder
-  app.use(express.static(path.join(__dirname, '/frontend/build')));
+    //set static folder
+    app.use(express.static(path.join(__dirname, '/frontend/build')));
 
-  //any route that is not api will be redirected to index.html
-  app.get('*', (req, res) => 
-    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
-  );
+    //any route that is not api will redirect to index.html
+    app.get('*', (req, res) => 
+        res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+    );
 }else{
-  app.get('/', (req, res) => {
-    res.send('API is running...');
-  });
+    app.get('/', (req, res) => res.send('API Running'));
 };
 
 
